@@ -1,6 +1,7 @@
 package com.bookmarker.api.domain;
 
 import com.bookmarker.api.dto.BookmarkDTO;
+import com.bookmarker.api.dto.BookmarkVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,11 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     where lower(b.title) like lower(concat('%', :query, '%'))
     """)
     Page<BookmarkDTO> searchBookmarks(String query, Pageable pageable);
+
+    //query method name을 해석해서 query를 Hibernate가 생성
+//    Page<BookmarkDTO> findByTitleContainsIgnoreCase(String query, Pageable pageable);
+    Page<BookmarkVM> findByTitleContainsIgnoreCase(String query, Pageable pageable);
 }
+
 
 
