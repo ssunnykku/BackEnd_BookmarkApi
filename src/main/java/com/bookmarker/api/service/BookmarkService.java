@@ -26,9 +26,13 @@ public class BookmarkService {
     public BookmarksDTO<?> getBookmarks(Integer page) {
         int pageNo = page < 1 ? 0 : page - 1;
         Pageable pageable = PageRequest.of(pageNo, 10, Sort.Direction.DESC, "id");
-        Page<BookmarkDTO> bookmarkPage = repository.findAll(pageable)
-                //.map(bookmark -> mapper.toDTO(bookmark));
-                .map(mapper::toDTO);
+//        return repository.findAll(pageable).getContent();
+//        Page<Bookmark> bookmarkPage = repository.findAll(pageable);
+//       Page<Bookmark> bookmarkPage ==> Page<BookmarkDTO>
+//        Page<BookmarkDTO> bookmarkPage = repository.findAll(pageable)
+                //.map(bookmark -> mapper.toDTO(bookmark)); // Lambda Expression
+//                .map(mapper::toDTO); // Method Reference
+        Page<BookmarkDTO> bookmarkPage = repository.findBookmarks(pageable);
         return new BookmarksDTO<>(bookmarkPage);
     }
 
